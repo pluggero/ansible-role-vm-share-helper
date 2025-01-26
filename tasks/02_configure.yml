@@ -10,6 +10,7 @@
         group: "{{ ansible_user }}"
 
     - name: Create Unison profile
+      when: vm_share_helper_sync_folders | length > 0
       ansible.builtin.template:
         src: vm_share_helper.prf.j2
         dest: "{{ vm_share_helper_unison_config_dir }}/{{ sync_item.unison_name }}.prf"

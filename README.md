@@ -15,7 +15,7 @@ None.
 Available variables are listed below, along with default values (see `defaults/main.yml`):
 
 ```yaml
-vm_share_helper_sync_folders_host:
+vm_share_helper_sync_folders:
   - vbox_share_name: "shared_folder_name" # This must be the name of the VirtualBox shared folder
     unison_name: "profile_name" # This must be the name of the Unison profile
     host: "/mnt/folder"
@@ -23,7 +23,7 @@ vm_share_helper_sync_folders_host:
     sync_interval: "10min" # Automatically sync every 10 minutes
 ```
 
-Set host-specific shared folders that are synced with the host system using shared folders with the `vm_share_helper_sync_folders_host` variable.
+Set host-specific shared folders that are synced with the host system using shared folders with the `vm_share_helper_sync_folders` variable.
 
 ## Dependencies
 

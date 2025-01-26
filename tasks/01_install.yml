@@ -23,11 +23,8 @@
       loop_control:
         loop_var: task_file
 
-    - name: Combine default sync_folders with host-specific sync_folders
-      ansible.builtin.set_fact:
-        vm_share_helper_sync_folders: "{{ vm_share_helper_sync_folders_role + (vm_share_helper_sync_folders_host | default([])) }}"
-
     - name: Ensure mount folder exists
+      when: vm_share_helper_sync_folders | length > 0
       ansible.builtin.file:
         path: "{{ sync_item.host }}"
         state: directory
@@ -40,6 +37,7 @@
       become: true
 
     - name: Ensure shared folder exists
+      when: vm_share_helper_sync_folders | length > 0
       ansible.builtin.file:
         path: "{{ sync_item.vm }}"
         state: directory
@@ -52,6 +50,7 @@
       become: true
 
     - name: Add shared folder to /etc/fstab for automount
+      when: vm_share_helper_automount and vm_share_helper_sync_folders | length > 0
       ansible.builtin.mount:
         path: "{{ sync_item.host }}"
         src: "{{ sync_item.vbox_share_name }}"

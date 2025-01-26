@@ -1,15 +1,16 @@
 ---
-vm_share_helper_sync_folders_role:
-  - vbox_share_name: "linux_vm" # This must be the name of the VirtualBox shared folder
-    unison_name: "vm_share"
-    host: "/mnt/shared"
-    vm: "{{ ansible_env.HOME }}/documents/shared"
-    sync_interval: "10min"
-vm_share_helper_sync_folders_host: [] # This can be defined host-specifically
+vm_share_helper_sync_folders:
+  []
+  # - vbox_share_name: "linux_vm"
+  #   unison_name: "vm_share"
+  #   host: "/mnt/shared"
+  #   vm: "{{ ansible_env.HOME }}/documents/shared"
+  #   sync_interval: "10min"
 
+vm_share_helper_automount: true
 vm_share_helper_fstab_options: "defaults,uid=1000,gid=1000"
 vm_share_helper_unison_config_dir: "{{ ansible_env.HOME }}/.unison/" # This is the only valid config path for unison
 vm_share_helper_burp_zip_helper_enabled: true
 vm_share_helper_burp_zip_helper:
-  script_path: "{{ ansible_env.HOME }}/documents/zip_burp_files.sh"
+  script_path: "{{ ansible_env.HOME }}/zip_burp_files.sh"
   sync_interval: "10min"

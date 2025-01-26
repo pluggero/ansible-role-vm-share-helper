@@ -2,6 +2,7 @@
 - name: Create systemd user service
   block:
     - name: Create systemd user service files for sync_folders
+      when: vm_share_helper_sync_folders | length > 0
       ansible.builtin.template:
         src: vm_share_helper.service.j2
         dest: "{{ ansible_env.HOME }}/.config/systemd/user/vm_share_helper_{{ sync_item.unison_name }}.service"
@@ -12,6 +13,7 @@
       notify: Reload systemd user services
 
     - name: Create systemd timer files for sync_folders
+      when: vm_share_helper_sync_folders | length > 0
       ansible.builtin.template:
         src: vm_share_helper.timer.j2
         dest: "{{ ansible_env.HOME }}/.config/systemd/user/vm_share_helper_{{ sync_item.unison_name }}.timer"
@@ -22,6 +24,7 @@
       notify: Reload systemd user services
 
     - name: Enable and start sync_folders timer
+      when: vm_share_helper_sync_folders | length > 0
       ansible.builtin.systemd_service:
         name: vm_share_helper_{{ sync_item.unison_name }}.timer
         state: started
