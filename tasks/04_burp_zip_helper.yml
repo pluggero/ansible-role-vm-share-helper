@@ -34,6 +34,9 @@
             mode: "0700"
           notify: Reload systemd user services
 
+        - name: Ensure handlers are notified now to avoid systemd conflicts
+          ansible.builtin.meta: flush_handlers
+
         - name: Enable and start burp_zip_helper timer
           ansible.builtin.systemd_service:
             name: burp_zip_helper.timer

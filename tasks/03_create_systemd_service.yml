@@ -31,6 +31,9 @@
         loop_var: sync_item
       notify: Reload systemd user services
 
+    - name: Ensure handlers are notified now to systemd conflicts
+      ansible.builtin.meta: flush_handlers
+
     - name: Enable and start sync_folders timer
       when: vm_share_helper_sync_folders | length > 0
       ansible.builtin.systemd_service:
