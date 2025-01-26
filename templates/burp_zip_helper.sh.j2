@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# List of directories to search for .burp files
+{% for sync_item in vm_share_helper_sync_folders %}
+DIR="{{ sync_item.vm }}"
+if [ -d "$DIR" ]; then
+    echo "Processing directory: $DIR"
+    find "$DIR" -type f -name "*.burp" | while read -r burp_file; do
+        # Get the directory of the .burp file
+        burp_dir=$(dirname "$burp_file")
+        # Get the base name without extension
+        base_name=$(basename "$burp_file" .burp)
+        # Create zip file name in the same directory
+        zip_file="${burp_dir}/${base_name}-burp.zip"
+        # Zip the file and overwrite if zip file exists
+        zip -j -o "$zip_file" "$burp_file"
+        echo "Created zip: $zip_file"
+    done
+fi
+{% endfor %}

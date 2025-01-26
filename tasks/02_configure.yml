@@ -1,0 +1,21 @@
+---
+- name: Configure vm_share_helper
+  block:
+    - name: Ensure config folder exists
+      ansible.builtin.file:
+        path: "{{ vm_share_helper_unison_config_dir }}"
+        state: directory
+        mode: "0700"
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+
+    - name: Create Unison profile
+      ansible.builtin.template:
+        src: vm_share_helper.prf.j2
+        dest: "{{ vm_share_helper_unison_config_dir }}/{{ sync_item.unison_name }}.prf"
+        mode: "0644"
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+      with_items: "{{ sync_folders }}"
+      loop_control:
+        loop_var: sync_item

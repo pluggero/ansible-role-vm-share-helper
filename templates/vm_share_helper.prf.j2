@@ -1,0 +1,13 @@
+# Unison profile for syncing {{ sync_item.host }} and {{ sync_item.host }}
+root = {{ sync_item.host }}
+root = {{ sync_item.vm }}
+auto = true
+batch = true
+prefer = newer
+perms = 0
+owner = true
+group = true
+
+ignore = Name venv
+ignore = Name {*.burp}
+ignore = Name {*.burp.backup}

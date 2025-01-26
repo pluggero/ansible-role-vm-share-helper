@@ -1,0 +1,64 @@
+---
+- name: Install vm_share_helper
+  block:
+    - name: Include OS-specific variables
+      ansible.builtin.include_vars: "{{ var_file }}"
+      with_first_found:
+        - "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
+        - "{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml"
+        - "{{ ansible_distribution }}.yml"
+        - "{{ ansible_os_family }}.yml"
+        - "{{ ansible_lsb.id }}.yml"
+      loop_control:
+        loop_var: var_file
+
+    - name: Install OS-specific dependencies
+      ansible.builtin.include_tasks: "{{ task_file }}"
+      with_first_found:
+        - "noauto_install_dep_{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
+        - "noauto_install_dep_{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml"
+        - "noauto_install_dep_{{ ansible_distribution }}.yml"
+        - "noauto_install_dep_{{ ansible_os_family }}.yml"
+        - "noauto_install_dep_{{ ansible_lsb.id }}.yml"
+      loop_control:
+        loop_var: task_file
+
+    - name: Combine default sync_folders with host-specific sync_folders
+      ansible.builtin.set_fact:
+        vm_share_helper_sync_folders: "{{ vm_share_helper_sync_folders_role + ( vm_share_helper_sync_folders_host | default([])) }}"
+
+    - name: Ensure mount folder exists
+      ansible.builtin.file:
+        path: "{{ sync_item.host }}"
+        state: directory
+        mode: "0700"
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+      with_items: "{{ vm_share_helper_sync_folders }}"
+      loop_control:
+        loop_var: sync_item
+      become: true
+
+    - name: Ensure shared folder exists
+      ansible.builtin.file:
+        path: "{{ sync_item.vm }}"
+        state: directory
+        mode: "0700"
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+      with_items: "{{ sync_folders }}"
+      loop_control:
+        loop_var: sync_item
+      become: true
+
+    - name: Add shared folder to /etc/fstab for automount
+      ansible.builtin.mount:
+        path: "{{ sync_item.host }}"
+        src: "{{ sync_item.vbox_share_name }}"
+        fstype: "vboxsf"
+        opts: "{{ fstab_options }}"
+        state: mounted
+      with_items: "{{ vm_share_helper_sync_folders }}"
+      loop_control:
+        loop_var: sync_item
+      become: true

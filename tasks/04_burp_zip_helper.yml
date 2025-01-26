@@ -1,0 +1,35 @@
+---
+- name: Implement burp_zip_helper
+  when: vm_share_helper_burp_zip_helper_enabled
+  block:
+    - name: Generate burp_zip_helper script
+      ansible.builtin.template:
+        src: burp_zip_helper.sh.j2
+        dest: "{{ vm_share_helper_burp_zip_helper.script_path }}"
+        mode: "0700"
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+
+    - name: Create systemd user service for burp_zip_helper
+      block:
+        - name: Create systemd user service files for burp_zip_helper
+          ansible.builtin.template:
+            src: burp_zip_helper.service.j2
+            dest: "{{ ansible_env.HOME }}/.config/systemd/user/burp_zip_helper.service"
+            mode: "0700"
+          notify: Reload systemd user services
+
+        - name: Create systemd timer files for burp_zip_helper
+          ansible.builtin.template:
+            src: burp_zip_helper.timer.j2
+            dest: "{{ ansible_env.HOME }}/.config/systemd/user/burp_zip_helper.timer"
+            mode: "0700"
+          notify: Reload systemd user services
+
+        - name: Enable and start burp_zip_helper timer
+          ansible.builtin.systemd_service:
+            name: burp_zip_helper.timer
+            state: started
+            enabled: true
+            masked: false
+            scope: user

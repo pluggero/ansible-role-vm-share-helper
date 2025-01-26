@@ -1,0 +1,9 @@
+[Unit]
+Description=Run burp_zip_helper.service periodically
+
+[Timer]
+OnCalendar=*:0/{{ vm_share_helper_burp_zip_helper.sync_interval | regex_replace('min$', '') }}
+Persistent=true
+
+[Install]
+WantedBy=timers.target

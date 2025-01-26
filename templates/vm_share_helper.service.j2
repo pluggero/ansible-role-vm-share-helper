@@ -1,0 +1,9 @@
+[Unit]
+Description=Unison bidirectional sync between {{ sync_item.host }} and {{ sync_item.vm }}
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+Environment="HOME={{ ansible_env.HOME }}"
+ExecStart=/usr/bin/unison {{ sync_item.unison_name }}

@@ -1,0 +1,9 @@
+[Unit]
+Description=Run vm_share_helper.service for {{ sync_item.unison_name }} periodically
+
+[Timer]
+OnCalendar=*:0/{{ sync_item.sync_interval | regex_replace('min$', '') }}
+Persistent=true
+
+[Install]
+WantedBy=timers.target

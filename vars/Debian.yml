@@ -1,0 +1,3 @@
+---
+vm_share_helper_dep_pkgs:
+  - unison
