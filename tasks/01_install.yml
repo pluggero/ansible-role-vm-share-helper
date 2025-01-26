@@ -25,7 +25,7 @@
 
     - name: Combine default sync_folders with host-specific sync_folders
       ansible.builtin.set_fact:
-        vm_share_helper_sync_folders: "{{ vm_share_helper_sync_folders_role + ( vm_share_helper_sync_folders_host | default([])) }}"
+        vm_share_helper_sync_folders: "{{ vm_share_helper_sync_folders_role + (vm_share_helper_sync_folders_host | default([])) }}"
 
     - name: Ensure mount folder exists
       ansible.builtin.file:
