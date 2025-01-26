@@ -10,6 +10,14 @@
         owner: "{{ ansible_user }}"
         group: "{{ ansible_user }}"
 
+    - name: Ensure systemd user service folder exists
+      ansible.builtin.file:
+        path: "{{ ansible_env.HOME }}/.config/systemd/user"
+        state: directory
+        mode: "0700"
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+
     - name: Create systemd user service for burp_zip_helper
       block:
         - name: Create systemd user service files for burp_zip_helper
