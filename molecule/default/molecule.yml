@@ -3,15 +3,10 @@ role_name_check: 1
 dependency:
   name: galaxy
 driver:
-  name: docker
+  name: vagrant
 platforms:
   - name: instance
-    image: "pluggero/docker-${MOLECULE_DISTRO:-debian12}-ansible:latest"
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:rw
-    cgroupns_mode: host
-    privileged: true
-    pre_build_image: true
+    box: "${MOLECULE_DISTRO:-debian/bookworm64}"
 provisioner:
   name: ansible
   playbooks:
