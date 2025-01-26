@@ -16,6 +16,6 @@
         mode: "0644"
         owner: "{{ ansible_user }}"
         group: "{{ ansible_user }}"
-      with_items: "{{ sync_folders }}"
+      with_items: "{{ vm_share_helper_sync_folders }}"
       loop_control:
         loop_var: sync_item
