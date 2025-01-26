@@ -56,7 +56,7 @@
         path: "{{ sync_item.host }}"
         src: "{{ sync_item.vbox_share_name }}"
         fstype: "vboxsf"
-        opts: "{{ fstab_options }}"
+        opts: "{{ vm_share_helper_fstab_options }}"
         state: mounted
       with_items: "{{ vm_share_helper_sync_folders }}"
       loop_control:
