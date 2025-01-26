@@ -1,6 +1,6 @@
 # Ansible Role: VM Share Helper
 
-[![CI](https://github.com/pluggero/ansible-role-vm-share-helper/actions/workflows/ci.yml/badge.svg)](https://github.com/pluggero/ansible-role-vm-share-helper/actions/workflows/ci.yml) [![Ansible Galaxy downloads](https://img.shields.io/ansible/role/d/pluggero/vm-share-helper?label=Galaxy%20downloads&logo=ansible&color=%23096598)](https://galaxy.ansible.com/ui/standalone/roles/pluggero/vm-share-helper)
+[![CI](https://github.com/pluggero/ansible-role-vm-share-helper/actions/workflows/ci.yml/badge.svg)](https://github.com/pluggero/ansible-role-vm-share-helper/actions/workflows/ci.yml) [![Ansible Galaxy downloads](https://img.shields.io/ansible/role/d/pluggero/vm_share_helper?label=Galaxy%20downloads&logo=ansible&color=%23096598)](https://galaxy.ansible.com/ui/standalone/roles/pluggero/vm_share_helper)
 
 An Ansible Role that installs a basic configuration of the VM Share Helper.
 It can be used to sync data between the shared folder of a VM and the host.
