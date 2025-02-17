@@ -64,7 +64,8 @@ jobs:
           python-version: "3.x"
 
       - name: Install test dependencies
-        run: pip3 install ansible molecule molecule-plugins[vagrant]
+        # Pinned versions because of https://github.com/ansible-community/molecule-plugins/issues/301
+        run: pip3 install ansible molecule==25.1.0 molecule-plugins[vagrant]
 
       - name: Install VirtualBox
         run: |
