@@ -35,7 +35,7 @@ jobs:
           yamllint .
 
       - name: Run ansible-lint
-        uses: ansible/ansible-lint@4ce8e497d462cf73b4d4fac1e97b4ace4f317dcc # v24.12.2
+        uses: ansible/ansible-lint@e98f9b38769d45cbe3c55a23b2eb25631babe7c4 # v25.4.0
         with:
           working_directory: "pluggero.vm_share_helper"
           requirements_file: "requirements.yml"
