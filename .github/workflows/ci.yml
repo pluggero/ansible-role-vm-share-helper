@@ -47,9 +47,9 @@ jobs:
     strategy:
       matrix:
         include:
-          - vagrant_box: pluggero/debian12-ansible
+          - vagrant_box: debian12
             vagrant_box_version: "1.3.0"
-          - vagrant_box: pluggero/archlinux-ansible
+          - vagrant_box: archlinux
             vagrant_box_version: "1.3.0"
     env:
       VBOX_BRANCH: "7.1"
