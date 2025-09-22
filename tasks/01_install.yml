@@ -51,7 +51,7 @@
 
     - name: Add shared folder to /etc/fstab for automount
       when: vm_share_helper_automount and vm_share_helper_sync_folders | length > 0
-      ansible.builtin.mount:
+      ansible.posix.mount:
         path: "{{ sync_item.host }}"
         src: "{{ sync_item.vbox_share_name }}"
         fstype: "vboxsf"
